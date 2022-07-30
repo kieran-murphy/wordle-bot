@@ -9,7 +9,39 @@ const convertWordToInputs = (word) => {
   return thingsToInput;
 };
 
-function run(word) {
+const asyncInputWord = function (page,word) {
+  return new Promise(async (resolve, reject) => {
+    for (let i = 0; i < convertWordToInputs(word).length; i++) {
+    await page.click(
+      `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${convertWordToInputs(word)[i][0]}) > button:nth-child(${convertWordToInputs(word)[i][1]})`
+    );
+    await page.waitForTimeout(500);
+  }
+
+  await page.waitForTimeout(2000);
+
+  let urls = await page.evaluate(() => {
+    let results = [];
+    let items = document.querySelectorAll("div.Tile-module_tile__3ayIZ");
+    items.forEach((item) => {
+      if (item.getAttribute("data-state") != 'empty') {
+        results.push({
+          text: item.innerText,
+          state: item.getAttribute("data-state"),
+        });
+      }
+    });
+
+    return results;
+  });
+  return resolve(urls);
+  }).catch(err => console.log(err))
+}
+
+
+
+
+function run() {
 
   return new Promise(async (resolve, reject) => {
     try {
@@ -22,36 +54,18 @@ function run(word) {
       await page.waitForTimeout(1000);
 
 
-      for (let i = 0; i < convertWordToInputs("roate?").length; i++) {
-        await page.click(
-          `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${convertWordToInputs("roate?")[i][0]}) > button:nth-child(${convertWordToInputs("roate?")[i][1]})`
-        );
-        await page.waitForTimeout(1000);
-      }
+      // let first = await asyncInputWord(page, "roate?")
+      // let second = await asyncInputWord(page, "floor?")
+      // let third = await asyncInputWord(page, "dream?")
+      // let fourth = await asyncInputWord(page, "rager?")
+      let fifth = await asyncInputWord(page, "lover?")
+      let final = await asyncInputWord(page, "final?")
 
-      await page.waitForTimeout(1000);
 
-      for (let i = 0; i < convertWordToInputs("slice?").length; i++) {
-        await page.click(
-          `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${convertWordToInputs("slice?")[i][0]}) > button:nth-child(${convertWordToInputs("slice?")[i][1]})`
-        );
-        await page.waitForTimeout(1000);
-      }
-
-      await page.waitForTimeout(5000);
-      let urls = await page.evaluate(() => {
-        let results = [];
-        let items = document.querySelectorAll("div.Tile-module_tile__3ayIZ");
-        items.forEach((item) => {
-          results.push({
-            text: item.innerText,
-            state: item.getAttribute("data-state"),
-          });
-        });
-        return results;
-      });
       browser.close();
-      return resolve(urls);
+      return resolve(final);
+      
+
     } catch (e) {
       return reject(e);
     }
