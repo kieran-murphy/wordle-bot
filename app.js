@@ -1,6 +1,13 @@
 const puppeteer = require('puppeteer');
+const inputs = require('./inputs.json');
 
-function run () {
+function run (word) {
+
+    let thingsToInput = []; 
+    word.split("").forEach(( letter => {
+        thingsToInput.push([inputs[letter][0], inputs[letter][1]]);
+      }));
+
     return new Promise(async (resolve, reject) => {
         try {
             const browser = await puppeteer.launch({"headless": false});
@@ -11,28 +18,30 @@ function run () {
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(1) > button:nth-child(4)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[0][0]}) > button:nth-child(${thingsToInput[0][1]})`
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(1) > button:nth-child(9)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[1][0]}) > button:nth-child(${thingsToInput[1][1]})`
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(2) > button:nth-child(2)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[2][0]}) > button:nth-child(${thingsToInput[2][1]})`
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(1) > button:nth-child(5)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[3][0]}) > button:nth-child(${thingsToInput[3][1]})`
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(1) > button:nth-child(3)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[4][0]}) > button:nth-child(${thingsToInput[4][1]})`
             );
             await page.waitForTimeout(1000);
             await page.click(
-              "#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(3) > button:nth-child(1)"
+              `#wordle-app-game > div.Keyboard-module_keyboard__1HSnn > div:nth-child(${thingsToInput[5][0]}) > button:nth-child(${thingsToInput[5][1]})`
             );
+
+
             await page.waitForTimeout(5000);
             let urls = await page.evaluate(() => {
                 let results = [];
@@ -52,4 +61,4 @@ function run () {
         }
     })
 }
-run().then(console.log).catch(console.error);
+run("roate?").then(console.log).catch(console.error);
