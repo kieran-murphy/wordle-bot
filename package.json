@@ -1,0 +1,23 @@
+{
+  "name": "wordle-bot",
+  "version": "1.0.0",
+  "description": "A bot for solving wordle",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kieran-murphy/wordle-bot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kieran-murphy/wordle-bot/issues"
+  },
+  "homepage": "https://github.com/kieran-murphy/wordle-bot#readme",
+  "dependencies": {
+    "puppeteer": "^15.5.0"
+  }
+}
