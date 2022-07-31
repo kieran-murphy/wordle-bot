@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const inputs = require("./inputs.json");
+const words = require("./words.json");
 const iPhone = puppeteer.devices['iPhone X'];
 
 const convertWordToInputs = (word) => {
@@ -42,6 +43,7 @@ const asyncInputWord = (page, word) => {
 };
 
 const determineBestWord = (urls) => {
+  
   return "clown?";
 };
 
@@ -68,10 +70,10 @@ const run = () => {
 
       let first = await asyncInputWord(page, "roate?");
       let second = await asyncInputWord(page, determineBestWord(first));
-      let third = await asyncInputWord(page, "dream?");
-      let fourth = await asyncInputWord(page, "rager?");
-      let fifth = await asyncInputWord(page, "lover?");
-      let final = await asyncInputWord(page, "final?");
+      let third = await asyncInputWord(page, determineBestWord(second));
+      let fourth = await asyncInputWord(page, determineBestWord(third));
+      let fifth = await asyncInputWord(page, determineBestWord(fourth));
+      let final = await asyncInputWord(page, determineBestWord(fifth));
 
       // browser.close();
       return resolve(final);
