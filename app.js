@@ -17,6 +17,8 @@ const run = (firstWord) => {
         //   isMobile: true,
         // },
       });
+      // const context = browser.defaultBrowserContext();
+      // context.overridePermissions(['clipboard-read'])
       const page = await browser.newPage();
       // await page.emulate(iPhone);
       await page.goto("https://www.nytimes.com/games/wordle/index.html");
@@ -44,13 +46,17 @@ const run = (firstWord) => {
       await page.waitForTimeout(4000);
       await page.click("#share-button");
 
-      await page.waitForTimeout(30000);
+      // const score = await page.evaluate(() => navigator.clipboard.readText())
+
+      // console.log(score);
+
+      await page.waitForTimeout(20000);
       browser.close();
-      return resolve(final);
+      return resolve([]);
     } catch (e) {
       return reject(e);
     }
   });
 };
 
-run("roate").then(console.log).catch(console.error);
+run("adieu").then(console.log).catch(console.error);
