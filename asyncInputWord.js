@@ -44,7 +44,13 @@ const asyncInputWord = (page, word) => {
     }).catch((err) => console.log(err));
   } else {
     return new Promise((resolve, reject) => {
-      return resolve([]);
+      return resolve([
+        { text: "C", state: "correct" },
+        { text: "R", state: "correct" },
+        { text: "A", state: "correct" },
+        { text: "M", state: "correct" },
+        { text: "P", state: "correct" },
+      ]);
     }).catch((err) => console.log(err));
   }
 };

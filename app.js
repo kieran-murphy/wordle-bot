@@ -50,7 +50,7 @@ const run = (firstWord) => {
 
       // console.log(score);
 
-      await page.waitForTimeout(20000);
+      await page.waitForTimeout(10000);
       browser.close();
       return resolve([]);
     } catch (e) {

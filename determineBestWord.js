@@ -1,6 +1,7 @@
 const words = require("./words.json");
 
 const determineBestWord = (letters) => {
+  let protectedLetters = [];
   if (letters.length > 0) {
     let lastFive = letters.slice(-5);
     complete = true;
@@ -22,21 +23,8 @@ const determineBestWord = (letters) => {
       }
 
       letters.forEach((letter) => {
-        if (letter.state === "absent") {
-          words.words.forEach((word) => {
-            for (let i = 0; i < word.split("").length; i++) {
-              if (word.split("")[i] === letter.text.toLowerCase()) {
-                if (i === letter.position) {
-                  words.words = words.words.filter((item) => item !== word);
-                }
-              }
-            }
-          });
-        }
-      });
-
-      letters.forEach((letter) => {
         if (letter.state === "present") {
+          protectedLetters.push(letter.text.toLowerCase())
           words.words.forEach((word) => {
             if (!word.includes(letter.text.toLowerCase())) {
               words.words = words.words.filter((item) => item !== word);
@@ -61,6 +49,7 @@ const determineBestWord = (letters) => {
 
       letters.forEach((letter) => {
         if (letter.state === "correct") {
+          protectedLetters.push(letter.text.toLowerCase())
           words.words.forEach((word) => {
             for (let i = 0; i < word.split("").length; i++) {
               if (word.split("")[i] !== letter.text.toLowerCase()) {
@@ -69,6 +58,20 @@ const determineBestWord = (letters) => {
                 }
               }
             }
+          });
+        }
+      });
+
+      console.log(protectedLetters);
+
+      letters.forEach((letter) => {
+        if (letter.state === "absent") {
+          words.words.forEach((word) => {
+            if (word.includes(letter.text.toLowerCase())) {
+              if (!protectedLetters.includes(letter.text.toLowerCase())) {
+              words.words = words.words.filter((item) => item !== word);
+            }
+          }
           });
         }
       });
