@@ -62,8 +62,6 @@ const determineBestWord = (letters) => {
         }
       });
 
-      console.log(protectedLetters);
-
       letters.forEach((letter) => {
         if (letter.state === "absent") {
           words.words.forEach((word) => {

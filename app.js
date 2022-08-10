@@ -3,22 +3,20 @@ const inputs = require("./inputs.json");
 const words = require("./words.json");
 const { determineBestWord } = require("./determineBestWord.js");
 const { convertWordToInputs, asyncInputWord } = require("./asyncInputWord");
-// const iPhone = puppeteer.devices["iPhone X"];
+// const iPhone = puppeteer.devices["iPhone 11"];
 
 const run = (firstWord) => {
   return new Promise(async (resolve, reject) => {
     try {
       const browser = await puppeteer.launch({
         headless: false,
-        // args: [`--window-size=450,950`],
-        // defaultViewport: {
-        //   width: 450,
-        //   height: 900,
-        //   isMobile: true,
-        // },
+        args: [`--window-size=450,950`],
+        defaultViewport: {
+          width: 500,
+          height: 800,
+          isMobile: true,
+        },
       });
-      // const context = browser.defaultBrowserContext();
-      // context.overridePermissions(['clipboard-read'])
       const page = await browser.newPage();
       // await page.emulate(iPhone);
       await page.goto("https://www.nytimes.com/games/wordle/index.html");
@@ -41,14 +39,9 @@ const run = (firstWord) => {
       let fourth = await asyncInputWord(page, determineBestWord(third));
       let fifth = await asyncInputWord(page, determineBestWord(fourth));
       let final = await asyncInputWord(page, determineBestWord(fifth));
-
       
       await page.waitForTimeout(4000);
       await page.click("#share-button");
-
-      // const score = await page.evaluate(() => navigator.clipboard.readText())
-
-      // console.log(score);
 
       await page.waitForTimeout(10000);
       browser.close();
