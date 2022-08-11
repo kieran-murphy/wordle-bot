@@ -3,6 +3,7 @@ const inputs = require("./inputs.json");
 const words = require("./words.json");
 const { determineBestWord } = require("./determineBestWord.js");
 const { convertWordToInputs, asyncInputWord } = require("./asyncInputWord");
+const myArgs = process.argv.slice(2);
 // const iPhone = puppeteer.devices["iPhone 11"];
 
 const run = (firstWord) => {
@@ -52,4 +53,8 @@ const run = (firstWord) => {
   });
 };
 
-run("adieu").then(console.log).catch(console.error);
+if (myArgs.length > 0) {
+  run(myArgs[0]).then(console.log).catch(console.error);
+} else {
+  run("adieu").then(console.log).catch(console.error);
+}
