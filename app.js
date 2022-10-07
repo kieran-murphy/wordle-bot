@@ -22,7 +22,7 @@ const run = (firstWord) => {
       // await page.emulate(iPhone);
       await page.goto("https://www.nytimes.com/games/wordle/index.html");
       await page.click(
-        "#wordle-app-game > div.Modal-module_modalOverlay__81ZCi.Modal-module_enableAuth__SR682 > div > div > svg"
+        "body > div > div > dialog > div > button"
       );
       await page.waitForTimeout(1000);
       await page.click("#settings-button > svg > path");
@@ -30,7 +30,7 @@ const run = (firstWord) => {
       await page.click("#hardMode > button");
       await page.waitForTimeout(1000);
       await page.click(
-        "#wordle-app-game > div.Modal-module_modalOverlay__81ZCi.Modal-module_enableAuth__SR682 > div > div.Modal-module_closeIcon__b4z74 > svg"
+        "body > div > div > dialog > div > button"
       );
       await page.waitForTimeout(1000);
 
